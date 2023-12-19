@@ -7,13 +7,13 @@ export function Search() {
   return (
     <div className={styles.root}>
       <svg
-        class={styles.icon}
+        className={styles.icon}
         fill="none"
         height="24"
         stroke="currentColor"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        stroke-width="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth="2"
         viewBox="0 0 24 24"
         width="24"
         xmlns="http://www.w3.org/2000/svg">
@@ -29,7 +29,7 @@ export function Search() {
       {searchValue && (
         <button onClick={() => setSearchValue("")} className={styles.button}>
           <svg
-            class={styles.close}
+            className={styles.close}
             id="Layer_1"
             version="1.1"
             viewBox="0 0 512 512"

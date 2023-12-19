@@ -7,19 +7,33 @@ import Sceleton from "../components/PizzaBlock/Skeleton";
 import { Pagination } from "../components/Pagination";
 import { SearchContext } from "../App";
 
+// redux (useSelector)- чтение, (useDispatch) - запись
+import { useSelector, useDispatch } from "react-redux";
+
+// Slice Методы для изминений записи в Slice файле filterSlice.js
+import { setCategoryId, setSortType } from "../redux/slices/filterSlice";
+
 export function Home() {
+  // redux получение id
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  console.log(categoryId);
+  // redux получение sortType
+  const sortType = useSelector((state) => state.filter.sort);
+  // redux запись
+  const dispatch = useDispatch();
+
   const { searchValue } = React.useContext(SearchContext);
   // получение с сервера даных
   const [items, setItems] = React.useState([]);
   // скелитон
   const [isLoading, setIsLoading] = React.useState(true);
   // категория
-  const [categoryId, setCategoryId] = React.useState(0);
+  // const [categoryId, setCategoryId] = React.useState(0);
   //сортировка
-  const [sortType, setSortType] = React.useState({
-    name: "популярности (DESC)",
-    sortProperty: "rating",
-  });
+  // const [sortType, setSortType] = React.useState({
+  //   name: "популярности (DESC)",
+  //   sortProperty: "rating",
+  // });
   //получение количество страниц
   const [numberPageServer, setNumberPageServer] = React.useState(1);
   // для страниц
@@ -62,8 +76,8 @@ export function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(id) => setCategoryId(id)} />
-        {<Sort value={sortType} onChangeSort={(i) => setSortType(i)} />}
+        <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+        {<Sort value={sortType} onChangeSort={(i) => dispatch(setSortType(i))} />}
       </div>
       <h2 className="content__title">Все пиццы</h2>
       <div className="content__items">{isLoading ? sceletons : pizzas}</div>
