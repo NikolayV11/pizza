@@ -3,4 +3,3 @@ import filter from "./slices/filterSlice";
 export const store = configureStore({
   reducer: { filter },
 });
-console.log("store", store);

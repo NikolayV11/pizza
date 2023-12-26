@@ -1,18 +1,29 @@
 import React from "react";
+// redux (useSelector)- чтение, (useDispatch) - запись
+import { useSelector, useDispatch } from "react-redux";
 
-export function Sort({ value, onChangeSort }) {
+// Slice Методы для изминений записи в Slice файле filterSlice.js
+import { setSortType } from "../redux/slices/filterSlice";
+
+export const list = [
+  { name: "популярности (DESC)", sortProperty: "rating" },
+  { name: "популярности (ASC)", sortProperty: "-rating" },
+  { name: "цене (DESC)", sortProperty: "price" },
+  { name: "цене (ASC)", sortProperty: "-price" },
+  { name: "алфавиту (DESC)", sortProperty: "title" },
+  { name: "алфавиту (ASC)", sortProperty: "-title" },
+];
+
+export function Sort() {
+  // redux запись
+  const dispatch = useDispatch();
+  // redux получение sortType
+  const sortType = useSelector((state) => state.filter.sortType);
+
   const [open, setOpen] = React.useState(false);
-  const list = [
-    { name: "популярности (DESC)", sortProperty: "rating" },
-    { name: "популярности (ASC)", sortProperty: "-rating" },
-    { name: "цене (DESC)", sortProperty: "price" },
-    { name: "цене (ASC)", sortProperty: "-price" },
-    { name: "алфавиту (DESC)", sortProperty: "title" },
-    { name: "алфавиту (ASC)", sortProperty: "-title" },
-  ];
 
   function onClickListItem(item) {
-    onChangeSort(item);
+    dispatch(setSortType(item));
     setOpen(!open);
   }
 
@@ -31,7 +42,7 @@ export function Sort({ value, onChangeSort }) {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpen(!open)}>{value.name}</span>
+        <span onClick={() => setOpen(!open)}>{sortType.name}</span>
       </div>
       {open && (
         <div className="sort__popup">
@@ -40,7 +51,7 @@ export function Sort({ value, onChangeSort }) {
               return (
                 <li
                   key={index}
-                  className={value.name === item.name ? "active" : ""}
+                  className={sortType.name === item.name ? "active" : ""}
                   onClick={() => onClickListItem(item)}>
                   {item.name}
                 </li>
