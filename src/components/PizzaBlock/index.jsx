@@ -1,16 +1,36 @@
 import React from "react";
 
-export function PizzaBlock({ title, price, imageUrl, sizes, types, getTitle }) {
+// redux (useSelector)- чтение, (useDispatch) - запись
+import { useSelector, useDispatch } from "react-redux";
+
+// Slice Методы для изминений записи в Slice файле cartSlice.js
+import { addItem, removeItem, clearItems } from "../../redux/slices/cartSlice";
+
+const typeName = ["тонкое", "традиционное"];
+
+export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+  const cartItems = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const addedCount = cartItems ? cartItems.count : 0;
+  const dispatch = useDispatch();
+
   const [activeType, setActiveType] = React.useState(0);
+
   const [activeSizes, setActiveSizes] = React.useState(0);
 
-  const typeName = ["тонкое", "традиционное"];
   const [pizzaCount, setPizzaCount] = React.useState(0);
 
-  function onClickAddButton() {
-    setPizzaCount(pizzaCount + 1);
-  }
+  function onClickAdd() {
+    const item = {
+      id,
+      title,
+      price,
+      imageUrl,
+      types: typeName[activeSizes],
+      sizes: activeType,
+    };
 
+    dispatch(addItem(item));
+  }
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
@@ -53,7 +73,7 @@ export function PizzaBlock({ title, price, imageUrl, sizes, types, getTitle }) {
         </div>
         <div className="pizza-block__bottom">
           <div className="pizza-block__price">от {price || 4} ₽</div>
-          <button className="button button--outline button--add">
+          <button onClick={onClickAdd} className="button button--outline button--add">
             <svg
               width="12"
               height="12"
@@ -66,7 +86,7 @@ export function PizzaBlock({ title, price, imageUrl, sizes, types, getTitle }) {
               />
             </svg>
             <span>Добавить</span>
-            <i>0</i>
+            {addedCount > 0 && <i>{addedCount}</i>}
           </button>
         </div>
       </div>

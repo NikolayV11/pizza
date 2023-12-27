@@ -26,7 +26,6 @@ const filterSlice = createSlice({
     },
     setNumberOfPages(state, action) {
       state.numberOfPages = action.payload;
-      console.log("action.payload", action.payload);
     },
     setFiltres(state, action) {
       state.categoryId = +action.payload.categoryId;

@@ -15,6 +15,7 @@ export const list = [
 ];
 
 export function Sort() {
+  const sortRef = React.useRef();
   // redux запись
   const dispatch = useDispatch();
   // redux получение sortType
@@ -24,11 +25,24 @@ export function Sort() {
 
   function onClickListItem(item) {
     dispatch(setSortType(item));
-    setOpen(!open);
+    setOpen(false);
   }
 
+  // клик вне компоента
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (!event.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+    document.body.addEventListener("click", handleClickOutside);
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

@@ -26,7 +26,7 @@ export function Home() {
   const navigate = useNavigate();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
-  // redux получение id
+  // redux получение из filter
   const { categoryId, sortType, currentPage, numberOfPages, limit } = useSelector(
     (state) => state.filter,
   );
@@ -74,7 +74,7 @@ export function Home() {
         setItems(result.result);
         dispatch(setCurrentPage(result.page));
         dispatch(setNumberOfPages(result.numberOfPages));
-        console.log(data);
+
         setIsLoading(false);
       });
   };
