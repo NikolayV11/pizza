@@ -6,8 +6,9 @@ import { setCurrentPage } from "../../redux/slices/filterSlice";
 // useDispatch - запись;
 import { useSelector, useDispatch } from "react-redux";
 
-export function Pagination() {
+export function Pagination({ p }) {
   const { currentPage, numberOfPages } = useSelector((state) => state.filter);
+  React.useEffect(() => {}, [currentPage, numberOfPages]);
   // redux запись
   const dispatch = useDispatch();
   return (
@@ -17,7 +18,7 @@ export function Pagination() {
       nextLabel=">"
       onPageChange={(event) => dispatch(setCurrentPage(Number(event.selected + 1)))}
       pageRangeDisplayed={4}
-      pageCount={numberOfPages}
+      pageCount={p}
       previousLabel="<"
       renderOnZeroPageCount={null}
       initialPage={currentPage - 1}

@@ -5,11 +5,15 @@ import { useSelector, useDispatch } from "react-redux";
 import { clearItems } from "../redux/slices/cartSlice";
 
 import CartItem from "./../components/CartItem";
+import CartEmpty from "../components/CartEmpty";
 
 export function Cart() {
   const dispatch = useDispatch();
   const { items, count, totalPrice } = useSelector((state) => state.cart);
 
+  if (!totalPrice) {
+    return <CartEmpty />;
+  }
   return (
     <div className="container container--cart">
       <div className="cart">
