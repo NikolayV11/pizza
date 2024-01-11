@@ -4,12 +4,12 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Slice Методы для изминений записи в Slice файле cartSlice.js
-import { addItem, removeItem, clearItems } from "../../redux/slices/cartSlice";
+import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
 const typeName = ["тонкое", "традиционное"];
 
 export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
-  const cartItems = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const cartItems = useSelector(selectCartItemById(id));
   const addedCount = cartItems ? cartItems.count : 0;
   const dispatch = useDispatch();
 

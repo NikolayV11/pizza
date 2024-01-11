@@ -2,14 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector, useDispatch } from "react-redux";
-import { clearItems } from "../redux/slices/cartSlice";
+import { clearItems, selectCart } from "../redux/slices/cartSlice";
 
 import CartItem from "./../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
 
 export function Cart() {
   const dispatch = useDispatch();
-  const { items, count, totalPrice } = useSelector((state) => state.cart);
+  const { items, count, totalPrice } = useSelector(selectCart);
 
   if (!totalPrice) {
     return <CartEmpty />;

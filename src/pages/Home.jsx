@@ -6,21 +6,15 @@ import qs from "qs";
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector, useDispatch } from "react-redux";
 // Slice Методы для изминений записи в Slice файле filterSlice.js
-import {
-  setCategoryId,
-  setCurrentPage,
-  setNumberOfPages,
-  setFiltres,
-} from "../redux/slices/filterSlice";
+import { selectFilter, setCategoryId, setFiltres } from "../redux/slices/filterSlice";
 // Slice Методы для изминений записи в Slice файле pizzasSlice.js
-import { fetchPizzas } from "../redux/slices/pizzasSlice.js";
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice.js";
 
 import { Sort, list } from "../components/Sort";
 import { Categories } from "../components/Categories";
 import { PizzaBlock } from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Skeleton";
 import { Pagination } from "../components/Pagination";
-import { SearchContext } from "../App";
 
 export function Home() {
   const navigate = useNavigate();
@@ -28,24 +22,18 @@ export function Home() {
   const isMounted = React.useRef(false);
 
   // redux получение из filter
-  const { categoryId, sortType, currentPage, limit } = useSelector((state) => state.filter);
+  const { categoryId, sortType, currentPage, limit, searchValue } = useSelector(selectFilter);
 
   // redux получение из pizzas
-  const { items, status } = useSelector((state) => state.pizzas);
+  const { items, status } = useSelector(selectPizzaData);
 
   // redux запись
   const dispatch = useDispatch();
 
-  // поиск
-  const { searchValue } = React.useContext(SearchContext);
-
   // гинирация блоков пиц
-  const pizzas = items?.result
-    ? items.result.map((item) => {
-        return <PizzaBlock {...item} key={item.id} />;
-      })
-    : [];
-
+  const pizzas = items.result.map((item) => {
+    return <PizzaBlock {...item} key={item.id} />;
+  });
   // отображение запросса на сервер
   const sceletons = [...new Array(6)].map((_, index) => {
     return <Sceleton key={index} />;
@@ -61,24 +49,6 @@ export function Home() {
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     // поиск по названию
     const search = searchValue ? `&search=${searchValue}` : "";
-
-    // запрос на сервер для получения данных Асинхронное выполнение
-    // axios
-    //   .get(
-    //     `http://localhost:5500/data?p=${currentPage}&l=${limit}&${category}&sortby=${sortby}&orderBy=${order}${search}`,
-    //   )
-    //   .then((data) => {
-    //     cons// запрос на сервер для получения данных Асинхронное выполнениеt result = data.data;
-    //     setItems(result.result);
-    //     dispatch(setCurrentPage(result.page));
-    // dispatch(setNumberOfPages(result.numberOfPages));
-
-    //
-    //   })
-    //   .catch((err) => {
-    //     console.log(err, "beck");
-    //
-    //   });
 
     // запрос на сервер для получения данных Синхронное выполнение
 
@@ -138,7 +108,7 @@ export function Home() {
       ) : (
         <div className="content__items">{status === "loading" ? sceletons : pizzas}</div>
       )}
-      <div className="content__items">{status === "loading" ? sceletons : pizzas}</div>
+
       {items.numberOfPages > 1 ? <Pagination p={items.numberOfPages} /> : ""}
     </div>
   );

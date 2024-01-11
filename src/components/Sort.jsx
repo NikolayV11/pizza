@@ -3,7 +3,7 @@ import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Slice Методы для изминений записи в Slice файле filterSlice.js
-import { setSortType } from "../redux/slices/filterSlice";
+import { setSortType, selectSort } from "../redux/slices/filterSlice";
 
 export const list = [
   { name: "популярности (DESC)", sortProperty: "rating" },
@@ -19,7 +19,7 @@ export function Sort() {
   // redux запись
   const dispatch = useDispatch();
   // redux получение sortType
-  const sortType = useSelector((state) => state.filter.sortType);
+  const sortType = useSelector(selectSort);
 
   const [open, setOpen] = React.useState(false);
 
