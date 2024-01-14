@@ -1,10 +1,10 @@
-import React from "react";
+import * as React from "react";
 import { Link } from "react-router-dom";
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector, useDispatch } from "react-redux";
 import { clearItems, selectCart } from "../redux/slices/cartSlice";
 
-import CartItem from "./../components/CartItem";
+import CartItem from "../components/CartItem";
 import CartEmpty from "../components/CartEmpty";
 
 export function Cart() {
@@ -90,7 +90,7 @@ export function Cart() {
           </div>
         </div>
         <div className="content__items">
-          {items.map((item, index) => {
+          {items.map((item: any, index: number) => {
             return <CartItem {...item} key={index} />;
           })}
         </div>

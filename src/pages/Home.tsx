@@ -1,5 +1,5 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import * as React from "react";
+import { useNavigate, Link } from "react-router-dom";
 // отображения параметров URL
 import qs from "qs";
 
@@ -31,8 +31,12 @@ export function Home() {
   const dispatch = useDispatch();
 
   // гинирация блоков пиц
-  const pizzas = items.result.map((item) => {
-    return <PizzaBlock {...item} key={item.id} />;
+  const pizzas = items.result.map((item: any) => {
+    return (
+      <Link key={item.id} to={`/pizza/${item.id}`}>
+        <PizzaBlock {...item} />
+      </Link>
+    );
   });
   // отображение запросса на сервер
   const sceletons = [...new Array(6)].map((_, index) => {
@@ -44,7 +48,7 @@ export function Home() {
     // выбор сортировки
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
     // замена символа
-    const sortby = sortType.sortProperty.replace("-", "");
+    const sortBy = sortType.sortProperty.replace("-", "");
     // выбор категории
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     // поиск по названию
@@ -52,7 +56,17 @@ export function Home() {
 
     // запрос на сервер для получения данных Синхронное выполнение
 
-    dispatch(fetchPizzas({ order, sortby, category, search, currentPage, limit }));
+    dispatch(
+      // @ts-ignore
+      fetchPizzas({
+        order,
+        sortBy,
+        category,
+        search,
+        currentPage,
+        limit,
+      }),
+    );
 
     window.scrollTo(0, 0);
   }
@@ -97,7 +111,10 @@ export function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+        <Categories
+          value={categoryId}
+          onChangeCategory={(id: number) => dispatch(setCategoryId(id))}
+        />
         {<Sort />}
       </div>
       <h2 className="content__title">Все пиццы</h2>
@@ -109,7 +126,7 @@ export function Home() {
         <div className="content__items">{status === "loading" ? sceletons : pizzas}</div>
       )}
 
-      {items.numberOfPages > 1 ? <Pagination p={items.numberOfPages} /> : ""}
+      {items.numberOfPages > 1 ? <Pagination allPages={items.numberOfPages} /> : ""}
     </div>
   );
 }

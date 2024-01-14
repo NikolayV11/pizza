@@ -9,7 +9,6 @@ export const fetchPizzas = createAsyncThunk(
     const { data } = await axios.get(
       `http://localhost:5500/data?p=${currentPage}&l=${limit}&${category}&sortby=${sortby}&orderBy=${order}${search}`,
     );
-    console.log(data);
     return data;
   },
 );

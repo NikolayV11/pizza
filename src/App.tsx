@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { Routes, Route } from "react-router-dom";
 
 import "./scss/app.scss";
@@ -6,6 +6,7 @@ import "./App.css";
 
 // components
 import { Header } from "./components/Header";
+import { FullPizza } from "./pages/FullPizza";
 import { Home } from "./pages/Home";
 import { Cart } from "./pages/Cart";
 import { NotFound } from "./pages/NotFound";
@@ -18,6 +19,7 @@ export function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/pizza/:id" element={<FullPizza />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>

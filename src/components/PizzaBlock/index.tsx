@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector, useDispatch } from "react-redux";
@@ -6,18 +6,31 @@ import { useSelector, useDispatch } from "react-redux";
 // Slice Методы для изминений записи в Slice файле cartSlice.js
 import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
 
-const typeName = ["тонкое", "традиционное"];
+const typeName: string[] = ["тонкое", "традиционное"];
 
-export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
+type PizzaBlockProps = {
+  id: number;
+  title: string;
+  price: number;
+  imageUrl: string;
+  sizes: number[];
+  types: number[];
+};
+export const PizzaBlock: React.FC<PizzaBlockProps> = ({
+  id,
+  title,
+  price,
+  imageUrl,
+  sizes,
+  types,
+}) => {
   const cartItems = useSelector(selectCartItemById(id));
   const addedCount = cartItems ? cartItems.count : 0;
   const dispatch = useDispatch();
 
-  const [activeType, setActiveType] = React.useState(0);
+  const [activeType, setActiveType] = React.useState<number>(0);
 
-  const [activeSizes, setActiveSizes] = React.useState(0);
-
-  const [pizzaCount, setPizzaCount] = React.useState(0);
+  const [activeSizes, setActiveSizes] = React.useState<number>(0);
 
   function onClickAdd() {
     const item = {
@@ -92,4 +105,4 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }) {
       </div>
     </div>
   );
-}
+};

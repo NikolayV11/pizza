@@ -1,32 +1,33 @@
-import React from "react";
+import * as React from "react";
 import debounce from "lodash.debounce";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
 import styles from "./Search.module.scss";
 export function Search() {
   const dispatch = useDispatch();
-  const [value, setValue] = React.useState("");
+  const [value, setValue] = React.useState<string>("");
   // обозначение элемента вместо его поска через js
-  const inputRef = React.useRef();
+  const inputRef = React.useRef<HTMLInputElement>(null);
 
   // очистить поиск
   function onClickClear() {
     setValue("");
     dispatch(setSearchValue(""));
-    inputRef.current.focus();
+
+    inputRef.current?.focus();
   }
 
   // отправка запросса с задержкой
   const updateSearchValue = React.useCallback(
-    debounce((str) => {
+    debounce((str: string) => {
       dispatch(setSearchValue(str));
     }, 300),
     [],
   );
 
   // ввод поиска
-  const onChengeInput = (event) => {
+  const onChengeInput = (event: any) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };

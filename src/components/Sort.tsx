@@ -1,11 +1,12 @@
-import React from "react";
+import * as React from "react";
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector, useDispatch } from "react-redux";
 
 // Slice Методы для изминений записи в Slice файле filterSlice.js
 import { setSortType, selectSort } from "../redux/slices/filterSlice";
 
-export const list = [
+type SortType = { name: string; sortProperty: string };
+export const list: SortType[] = [
   { name: "популярности (DESC)", sortProperty: "rating" },
   { name: "популярности (ASC)", sortProperty: "-rating" },
   { name: "цене (DESC)", sortProperty: "price" },
@@ -15,7 +16,7 @@ export const list = [
 ];
 
 export function Sort() {
-  const sortRef = React.useRef();
+  const sortRef = React.useRef<HTMLDivElement>();
   // redux запись
   const dispatch = useDispatch();
   // redux получение sortType
@@ -23,14 +24,14 @@ export function Sort() {
 
   const [open, setOpen] = React.useState(false);
 
-  function onClickListItem(item) {
+  function onClickListItem(item: SortType) {
     dispatch(setSortType(item));
     setOpen(false);
   }
 
   // клик вне компоента
   React.useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = (event: any) => {
       if (!event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
