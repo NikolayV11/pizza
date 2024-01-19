@@ -15,10 +15,10 @@ function CartItem({ id, title, price, imageUrl, count, types, sizes }: CartItemP
   const dispatch = useDispatch();
 
   const onClickPlus = () => {
-    dispatch(addItem({ id: id }));
+    dispatch(addItem({ id, title, price, imageUrl, count, types, sizes }));
   };
   const onClickMinus = () => {
-    dispatch(minusItem({ id: id }));
+    dispatch(minusItem(id));
   };
 
   const onClickRemove = () => {

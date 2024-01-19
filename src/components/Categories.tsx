@@ -1,12 +1,12 @@
 import * as React from "react";
 
+const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
+
 type CategoriesProps = {
   value: number;
-  onChangeCategory: any;
+  onChangeCategory: (i: number) => void;
 };
 export function Categories({ value, onChangeCategory }: CategoriesProps) {
-  const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"];
-
   return (
     <div className="categories">
       <ul>

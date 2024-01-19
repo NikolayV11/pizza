@@ -4,7 +4,8 @@ import * as React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 // Slice Методы для изминений записи в Slice файле cartSlice.js
-import { addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { CartItem, addItem, selectCartItemById } from "../../redux/slices/cartSlice";
+import { Link } from "react-router-dom";
 
 const typeName: string[] = ["тонкое", "традиционное"];
 
@@ -16,14 +17,7 @@ type PizzaBlockProps = {
   sizes: number[];
   types: number[];
 };
-export const PizzaBlock: React.FC<PizzaBlockProps> = ({
-  id,
-  title,
-  price,
-  imageUrl,
-  sizes,
-  types,
-}) => {
+export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBlockProps) {
   const cartItems = useSelector(selectCartItemById(id));
   const addedCount = cartItems ? cartItems.count : 0;
   const dispatch = useDispatch();
@@ -33,13 +27,14 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
   const [activeSizes, setActiveSizes] = React.useState<number>(0);
 
   function onClickAdd() {
-    const item = {
+    const item: CartItem = {
       id,
       title,
       price,
       imageUrl,
       types: typeName[activeType],
       sizes: sizes[activeSizes],
+      count: 0,
     };
 
     dispatch(addItem(item));
@@ -47,15 +42,18 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <img
-          className="pizza-block__image"
-          src={
-            imageUrl ||
-            "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
-          }
-          alt="Pizza"
-        />
-        <h4 className="pizza-block__title">{title}</h4>
+        <Link key={id} to={`/pizza/${id}`}>
+          <img
+            className="pizza-block__image"
+            src={
+              imageUrl ||
+              "https://dodopizza-a.akamaihd.net/static/Img/Products/Pizza/ru-RU/b750f576-4a83-48e6-a283-5a8efb68c35d.jpg"
+            }
+            alt="Pizza"
+          />
+          <h4 className="pizza-block__title">{title}</h4>
+        </Link>
+
         <div className="pizza-block__selector">
           <ul>
             {types.map((item) => {
@@ -105,4 +103,4 @@ export const PizzaBlock: React.FC<PizzaBlockProps> = ({
       </div>
     </div>
   );
-};
+}

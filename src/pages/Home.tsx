@@ -1,16 +1,21 @@
 import * as React from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 // отображения параметров URL
 import qs from "qs";
 
 // redux (useSelector)- чтение, (useDispatch) - запись
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
+// useAppDispatch  костомный useDispatch
+import { useAppDispatch } from "../redux/store";
+
 // Slice Методы для изминений записи в Slice файле filterSlice.js
 import { selectFilter, setCategoryId, setFiltres } from "../redux/slices/filterSlice";
-// Slice Методы для изминений записи в Slice файле pizzasSlice.js
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice.js";
 
-import { Sort, list } from "../components/Sort";
+// Slice Методы для изминений записи в Slice файле pizzasSlice.ts
+import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
+
+import { SortPopup, list } from "../components/Sort";
 import { Categories } from "../components/Categories";
 import { PizzaBlock } from "../components/PizzaBlock";
 import Sceleton from "../components/PizzaBlock/Skeleton";
@@ -28,15 +33,11 @@ export function Home() {
   const { items, status } = useSelector(selectPizzaData);
 
   // redux запись
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // гинирация блоков пиц
   const pizzas = items.result.map((item: any) => {
-    return (
-      <Link key={item.id} to={`/pizza/${item.id}`}>
-        <PizzaBlock {...item} />
-      </Link>
-    );
+    return <PizzaBlock {...item} />;
   });
   // отображение запросса на сервер
   const sceletons = [...new Array(6)].map((_, index) => {
@@ -47,20 +48,19 @@ export function Home() {
   async function getPizzas() {
     // выбор сортировки
     const order = sortType.sortProperty.includes("-") ? "asc" : "desc";
-    // замена символа
-    const sortBy = sortType.sortProperty.replace("-", "");
+    // // замена символа
+    // const sortBy = sortType.sortProperty.replace("-", "");
     // выбор категории
     const category = categoryId > 0 ? `category=${categoryId}` : "";
     // поиск по названию
     const search = searchValue ? `&search=${searchValue}` : "";
 
-    // запрос на сервер для получения данных Синхронное выполнение
+    // запрос на сервер для получения данных Синхронное выполнени
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         order,
-        sortBy,
+        sortType,
         category,
         search,
         currentPage,
@@ -78,7 +78,7 @@ export function Home() {
       const params = qs.parse(window.location.search.substring(1));
 
       const sort = list.find((obj) => obj.sortProperty === params.sort);
-
+      console.log(window.location);
       dispatch(setFiltres({ ...params, sort }));
       isSearch.current = true;
     }
@@ -105,17 +105,15 @@ export function Home() {
     if (!isSearch.current) {
       getPizzas();
     }
+
     isSearch.current = false;
   }, [categoryId, sortType, currentPage, searchValue, limit]);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          value={categoryId}
-          onChangeCategory={(id: number) => dispatch(setCategoryId(id))}
-        />
-        {<Sort />}
+        <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+        {<SortPopup />}
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (

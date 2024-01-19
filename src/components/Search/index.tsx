@@ -27,7 +27,7 @@ export function Search() {
   );
 
   // ввод поиска
-  const onChengeInput = (event: any) => {
+  const onChengeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
     updateSearchValue(event.target.value);
   };

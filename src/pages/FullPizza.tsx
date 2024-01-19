@@ -24,7 +24,7 @@ export function FullPizza() {
       }
     }
     fetchPizza();
-  }, []);
+  }, [id]);
   if (!pizza) {
     return <Sceleton />;
   }

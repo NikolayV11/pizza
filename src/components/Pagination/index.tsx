@@ -7,7 +7,7 @@ import { selectFilter, setCurrentPage } from "../../redux/slices/filterSlice";
 import { useSelector, useDispatch } from "react-redux";
 
 export function Pagination({ allPages }: { allPages: number }) {
-  const { currentPage } = useSelector(selectFilter);
+  const { currentPage }: { currentPage: number } = useSelector(selectFilter);
   // redux запись
   const dispatch = useDispatch();
   return (
