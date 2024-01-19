@@ -22,10 +22,10 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBl
   const addedCount = cartItems ? cartItems.count : 0;
   const dispatch = useDispatch();
 
-  const [activeType, setActiveType] = React.useState<number>(0);
+  const [activeType, setActiveType] = React.useState<number>(types[0]);
 
   const [activeSizes, setActiveSizes] = React.useState<number>(0);
-
+  console.log(types, "types");
   function onClickAdd() {
     const item: CartItem = {
       id,
@@ -39,6 +39,7 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBl
 
     dispatch(addItem(item));
   }
+
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">

@@ -28,7 +28,7 @@ const initialState: FilterSliceState = {
   categoryId: 0,
   currentPage: 1, // запрошенная страница
   numberOfPages: 1, // всего страниц
-  limit: 6,
+  limit: 8,
   sortType: {
     name: "популярности (DESC)",
     sortProperty: SortPropertyEnum.PRICE_DESC,
