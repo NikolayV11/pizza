@@ -5,7 +5,7 @@ import { Sort } from "./filterSlice";
 // import { SliceSortType } from "./filterSlice";
 
 // параметры пиццы
-type ResultPizzas = {
+export type ResultPizzas = {
   id: number;
   imageUrl: string;
   title: string;

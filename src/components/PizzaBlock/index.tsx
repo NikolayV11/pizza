@@ -25,7 +25,6 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBl
   const [activeType, setActiveType] = React.useState<number>(types[0]);
 
   const [activeSizes, setActiveSizes] = React.useState<number>(0);
-  console.log(types, "types");
   function onClickAdd() {
     const item: CartItem = {
       id,

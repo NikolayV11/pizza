@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 // отображения параметров URL
 import qs from "qs";
 
+import { useWhyDidYouUpdate } from "ahooks";
+
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector } from "react-redux";
 
@@ -13,7 +15,7 @@ import { useAppDispatch } from "../redux/store";
 import { selectFilter, setCategoryId, setFiltres } from "../redux/slices/filterSlice";
 
 // Slice Методы для изминений записи в Slice файле pizzasSlice.ts
-import { fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
+import { ResultPizzas, fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
 import { SortPopup, list } from "../components/Sort";
 import { Categories } from "../components/Categories";
@@ -36,8 +38,8 @@ export function Home() {
   const dispatch = useAppDispatch();
 
   // гинирация блоков пиц
-  const pizzas = items.result.map((item: any) => {
-    return <PizzaBlock {...item} />;
+  const pizzas = items.result.map((item: ResultPizzas, index: number) => {
+    return <PizzaBlock key={index} {...item} />;
   });
   // отображение запросса на сервер
   const sceletons = [...new Array(6)].map((_, index) => {
@@ -78,7 +80,7 @@ export function Home() {
       const params = qs.parse(window.location.search.substring(1));
 
       const sort = list.find((obj) => obj.sortProperty === params.sort);
-      console.log(window.location);
+
       dispatch(setFiltres({ ...params, sort }));
       isSearch.current = true;
     }
