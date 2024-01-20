@@ -42,7 +42,7 @@ export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBl
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
-        <Link key={id} to={`/pizza/${id}`}>
+        <Link to={`/pizza/${id}`}>
           <img
             className="pizza-block__image"
             src={

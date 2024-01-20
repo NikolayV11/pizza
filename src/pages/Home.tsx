@@ -3,8 +3,6 @@ import { useNavigate } from "react-router-dom";
 // отображения параметров URL
 import qs from "qs";
 
-import { useWhyDidYouUpdate } from "ahooks";
-
 // redux (useSelector)- чтение, (useDispatch) - запись
 import { useSelector } from "react-redux";
 
@@ -24,6 +22,11 @@ import Sceleton from "../components/PizzaBlock/Skeleton";
 import { Pagination } from "../components/Pagination";
 
 export function Home() {
+  // создаётся один раз при первом рендере
+  const onChangeCategory = React.useCallback((id: number) => {
+    dispatch(setCategoryId(id));
+  }, []);
+
   const navigate = useNavigate();
   const isSearch = React.useRef(false);
   const isMounted = React.useRef(false);
@@ -114,7 +117,7 @@ export function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories value={categoryId} onChangeCategory={(id) => dispatch(setCategoryId(id))} />
+        <Categories value={categoryId} onChangeCategory={onChangeCategory} />
         {<SortPopup />}
       </div>
       <h2 className="content__title">Все пиццы</h2>
