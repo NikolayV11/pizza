@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import Sceleton from "../components/PizzaBlock/Skeleton";
 
-export function FullPizza() {
+export default function FullPizza() {
   const [pizza, setPizza] = React.useState<{
     imageUrl: string;
     title: string;
