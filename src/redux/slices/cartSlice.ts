@@ -1,6 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "../store";
-
+import { getCartFromLS } from "./../../utils/getCartFromLocalStorage";
 export type CartItem = {
   id: number;
   title: string;
@@ -12,23 +12,23 @@ export type CartItem = {
 };
 
 // interface типизирует только объекты
-interface CartSliceState {
+export interface CartSliceState {
   totalPrice: number;
   items: CartItem[];
   count: number;
 }
 
 const initialState: CartSliceState = {
-  totalPrice: 0,
-  items: [],
-  count: 0,
+  totalPrice: getCartFromLS().price,
+  items: getCartFromLS().items,
+  count: getCartFromLS().count,
 };
 
 const cartSlice = createSlice({
   name: "cart",
   initialState,
   reducers: {
-    addItem(state, action: PayloadAction<CartItem>) {
+    addItem(state, action: PayloadAction<CartItem | any>) {
       const findItem = state.items.find((obj) => {
         return obj.id === action.payload.id;
       });
@@ -102,5 +102,5 @@ export function selectCartItemById(id: number) {
 // export const selectCartItemById=(id)=>(state) => state.cart.items.find((obj) => obj.id === id);
 
 export const { addItem, removeItem, clearItems, minusItem } = cartSlice.actions;
-
+// getCartFromLS();
 export default cartSlice.reducer;

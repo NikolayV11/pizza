@@ -7,11 +7,20 @@ import { useSelector } from "react-redux";
 
 import { Search } from "./Search";
 
-import { selectCart } from "../redux/slices/cartSlice";
+import { selectCart, CartSliceState } from "../redux/slices/cartSlice";
 export function Header() {
+  const isMounted = React.useRef(false);
   const location = useLocation();
 
-  const { totalPrice, count }: { totalPrice: number; count: number } = useSelector(selectCart);
+  const { totalPrice, count, items }: CartSliceState = useSelector(selectCart);
+
+  React.useEffect(() => {
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem("cart", json);
+    }
+    isMounted.current = true;
+  }, [items]);
   return (
     <div className="header">
       <div className="container">
