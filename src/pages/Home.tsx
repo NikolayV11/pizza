@@ -118,7 +118,7 @@ export function Home() {
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        {<SortPopup />}
+        {<SortPopup sortType={sortType} />}
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === "error" ? (

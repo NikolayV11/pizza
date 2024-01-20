@@ -1,10 +1,12 @@
 import * as React from "react";
-// redux (useSelector)- чтение, (useDispatch) - запись
-import { useSelector, useDispatch } from "react-redux";
+// redux  (useDispatch) - запись
+import { useDispatch } from "react-redux";
 
 // Slice Методы для изминений записи в Slice файле filterSlice.js
-import { setSortType, selectSort, SortPropertyEnum } from "../redux/slices/filterSlice";
-
+import { setSortType, SortPropertyEnum, Sort } from "../redux/slices/filterSlice";
+type SortPopupProps = {
+  sortType: Sort;
+};
 type SortItem = {
   name: string;
   sortProperty: SortPropertyEnum;
@@ -18,12 +20,10 @@ export const list: SortItem[] = [
   { name: "алфавиту (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-export function SortPopup() {
+export const SortPopup: React.FC<SortPopupProps> = React.memo(({ sortType }) => {
   const sortRef = React.useRef<HTMLDivElement>();
   // redux запись
   const dispatch = useDispatch();
-  // redux получение sortType
-  const sortType = useSelector(selectSort);
 
   const [open, setOpen] = React.useState(false);
 
@@ -84,4 +84,4 @@ export function SortPopup() {
       )}
     </div>
   );
-}
+});
