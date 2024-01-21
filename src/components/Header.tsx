@@ -5,10 +5,10 @@ import { Link, useLocation } from "react-router-dom";
 // redux (useSelector)- чтение
 import { useSelector } from "react-redux";
 
-import { Search } from "./Search";
+import Search from "./Search";
 
 import { selectCart, CartSliceState } from "../redux/slices/cartSlice";
-export function Header() {
+export default function Header() {
   const isMounted = React.useRef(false);
   const location = useLocation();
 

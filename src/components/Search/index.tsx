@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { setSearchValue } from "../../redux/slices/filterSlice";
 
 import styles from "./Search.module.scss";
-export function Search() {
+export default function Search() {
   const dispatch = useDispatch();
   const [value, setValue] = React.useState<string>("");
   // обозначение элемента вместо его поска через js

@@ -5,7 +5,7 @@ type CategoriesProps = {
   value: number;
   onChangeCategory: (i: number) => void;
 };
-export const Categories = React.memo(({ value, onChangeCategory }: CategoriesProps) => {
+const Categories = React.memo(({ value, onChangeCategory }: CategoriesProps) => {
   return (
     <div className="categories">
       <ul>
@@ -23,3 +23,4 @@ export const Categories = React.memo(({ value, onChangeCategory }: CategoriesPro
     </div>
   );
 });
+export default Categories;

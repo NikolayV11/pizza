@@ -17,7 +17,7 @@ type PizzaBlockProps = {
   sizes: number[];
   types: number[];
 };
-export function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBlockProps) {
+export default function PizzaBlock({ id, title, price, imageUrl, sizes, types }: PizzaBlockProps) {
   const cartItems = useSelector(selectCartItemById(id));
   const addedCount = cartItems ? cartItems.count : 0;
   const dispatch = useDispatch();

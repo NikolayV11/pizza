@@ -20,7 +20,8 @@ export const list: SortItem[] = [
   { name: "алфавиту (ASC)", sortProperty: SortPropertyEnum.TITLE_ASC },
 ];
 
-export const SortPopup: React.FC<SortPopupProps> = React.memo(({ sortType }) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const SortPopup: React.FC<SortPopupProps> = React.memo(({ sortType }) => {
   const sortRef = React.useRef<HTMLDivElement>();
   // redux запись
   const dispatch = useDispatch();
@@ -85,3 +86,5 @@ export const SortPopup: React.FC<SortPopupProps> = React.memo(({ sortType }) => 
     </div>
   );
 });
+
+export default SortPopup;

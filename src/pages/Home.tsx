@@ -15,13 +15,14 @@ import { selectFilter, setCategoryId, setFiltres } from "../redux/slices/filterS
 // Slice Методы для изминений записи в Slice файле pizzasSlice.ts
 import { ResultPizzas, fetchPizzas, selectPizzaData } from "../redux/slices/pizzasSlice";
 
-import { SortPopup, list } from "../components/Sort";
-import { Categories } from "../components/Categories";
-import { PizzaBlock } from "../components/PizzaBlock";
-import Sceleton from "../components/PizzaBlock/Skeleton";
-import { Pagination } from "../components/Pagination";
+import { list, SortPopup, Categories, PizzaBlock, Skeleton, Pagination } from "../components";
+// import SortPopup from "../components/Sort";
+// import Categories from "../components/Categories";
+// import PizzaBlock from "../components/PizzaBlock";
+// import Sceleton from "../components/PizzaBlock/Skeleton";
+// import Pagination from "../components/Pagination";
 
-export function Home() {
+export default function Home() {
   // создаётся один раз при первом рендере
   const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
@@ -46,7 +47,7 @@ export function Home() {
   });
   // отображение запросса на сервер
   const sceletons = [...new Array(6)].map((_, index) => {
-    return <Sceleton key={index} />;
+    return <Skeleton key={index} />;
   });
 
   // запрос на сервер

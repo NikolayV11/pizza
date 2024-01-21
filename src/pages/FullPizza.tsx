@@ -2,7 +2,7 @@ import * as React from "react";
 import axios from "axios";
 import { useParams, useNavigate } from "react-router-dom";
 
-import Sceleton from "../components/PizzaBlock/Skeleton";
+import { Skeleton } from "../components";
 
 export default function FullPizza() {
   const [pizza, setPizza] = React.useState<{
@@ -26,7 +26,7 @@ export default function FullPizza() {
     fetchPizza();
   }, [id]);
   if (!pizza) {
-    return <Sceleton />;
+    return <Skeleton />;
   }
   return (
     <div>
