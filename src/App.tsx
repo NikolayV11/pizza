@@ -13,8 +13,8 @@ import Home from "./pages/Home";
 
 const Cart = React.lazy(() => import("./pages/Cart"));
 
-const NotFound = React.lazy(() => import(/* webpackChunkName : "NotFound"*/ "./pages/NotFound"));
-const FullPizza = React.lazy(() => import("./pages/FullPizza"));
+const NotFound = React.lazy(() => import(/* webpackChunkName: "NotFound" */ "./pages/NotFound"));
+const FullPizza = React.lazy(() => import(/* webpackChunkName: "FullPizza" */ "./pages/FullPizza"));
 
 export function App() {
   return (
